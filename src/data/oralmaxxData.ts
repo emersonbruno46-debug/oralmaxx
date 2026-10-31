@@ -221,6 +221,20 @@ export const FAQ_ITEMS: FaqItem[] = [
 ];
 
 /**
+ * Especialidades (comunicação visual da fachada real)
+ */
+export const SPECIALTIES = [
+  'Implantes',
+  'Ortodontia',
+  'Harmonização',
+  'Clínica Geral',
+  'Estética',
+  'Endodontia',
+  'Periodontia',
+  'Cirurgia Bucomaxilofacial',
+];
+
+/**
  * Galeria da Estrutura
  */
 export const STRUCTURE_GALLERY = [
@@ -229,27 +243,31 @@ export const STRUCTURE_GALLERY = [
     title: 'Fachada Arquitetônica Contemporânea',
     description: 'Design moderno com revestimento amadeirado, comunicação visual marcante e acessibilidade.',
     imageUrl: '/images/fachada-hero-1440.webp',
-    aspect: 'wide',
+    area: 'lg:col-span-8',
+    ratio: 'aspect-[16/10] lg:aspect-auto lg:h-[420px]',
   },
   {
     id: 'radiologia-integrada',
     title: 'OralMaxx Radiologia Integrada',
     description: 'Torre envidraçada e setor de diagnóstico por imagem para agilidade no planejamento.',
-    imageUrl: '/images/fachada-radiologia.webp',
-    aspect: 'portrait',
+    imageUrl: '/images/clinica-torre.webp',
+    area: 'lg:col-span-4 lg:row-span-2',
+    ratio: 'aspect-[4/5] lg:aspect-auto lg:h-full',
   },
   {
     id: 'comunicacao-visual',
     title: 'Identidade & Acolhimento',
     description: 'Fachada tratada com acabamento em madeira e identidade visual de alto padrão.',
-    imageUrl: '/images/fachada-placa.webp',
-    aspect: 'square',
+    imageUrl: '/images/clinica-placa.webp',
+    area: 'lg:col-span-4',
+    ratio: 'aspect-[16/10] lg:aspect-auto lg:h-[320px]',
   },
   {
     id: 'acesso-principal',
     title: 'Entrada & Recepção',
     description: 'Portas envidraçadas e paisagismo integrado planejados para o seu conforto.',
-    imageUrl: '/images/fachada-entrada.webp',
-    aspect: 'square',
+    imageUrl: '/images/clinica-entrada.webp',
+    area: 'lg:col-span-4',
+    ratio: 'aspect-[16/10] lg:aspect-auto lg:h-[320px]',
   },
 ];

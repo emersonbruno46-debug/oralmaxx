@@ -1,127 +1,146 @@
-import React from 'react';
-import { ArrowDown, ArrowRight } from 'lucide-react';
-import { ORALMAXX_CONFIG, getWhatsAppUrl } from '../../data/oralmaxxData';
+import React, { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { ArrowDown, ScanLine, ShieldCheck } from 'lucide-react';
+import { ORALMAXX_CONFIG, SPECIALTIES, getWhatsAppUrl } from '../../data/oralmaxxData';
+import { EASE, SplitWords } from '../../lib/motion';
+import { WhatsAppIcon } from '../ui/Icons';
 
-// Ícone oficial SVG do WhatsApp para perfeita correspondência com a referência
-const WhatsAppIcon: React.FC<{ className?: string }> = ({ className = 'w-5 h-5' }) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    className={className}
-    aria-hidden="true"
-  >
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.884 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.456 5.711 1.457h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-  </svg>
-);
+const Marquee: React.FC = () => {
+  const row = (
+    <div className="flex shrink-0 items-center" aria-hidden="true">
+      {SPECIALTIES.map((s) => (
+        <React.Fragment key={s}>
+          <span className="px-7 font-serif text-[1.65rem] italic tracking-tight sm:text-[2.1rem]">{s}</span>
+          <span className="h-1.5 w-1.5 rounded-full bg-brand-blue" />
+        </React.Fragment>
+      ))}
+    </div>
+  );
+  return (
+    <div
+      className="group overflow-hidden bg-brand-navy-deep py-5 text-white select-none"
+      role="group"
+      aria-label={SPECIALTIES.join(', ')}
+    >
+      <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
+        {row}
+        {row}
+        {row}
+        {row}
+      </div>
+    </div>
+  );
+};
 
 export const Hero: React.FC = () => {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const imgY = useTransform(scrollYProgress, [0, 1], ['0%', '12%']);
+  const frameY = useTransform(scrollYProgress, [0, 1], ['0px', '-40px']);
+  const { technicalDirector } = ORALMAXX_CONFIG.brand;
+
+  const fade = (delay: number) => ({
+    initial: reduce ? false : { opacity: 0, y: 22 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.9, ease: EASE, delay },
+  });
+
   return (
-    <section
-      id="hero"
-      className="relative w-full overflow-hidden bg-brand-navy-dark pt-20 lg:pt-[88px] min-h-[640px] lg:min-h-[720px] xl:min-h-[780px] 2xl:min-h-[840px] flex items-center"
-      aria-label="Apresentação da Clínica OralMaxx"
-    >
-      {/* 
-        Fotografia Principal da Fachada
-        Desktop: usa a foto otimizada da fachada com proporções preservadas à direita.
-        Mobile: enquadramento vertical focado no edifício.
-      */}
-      <picture className="absolute inset-0 w-full h-full pointer-events-none select-none">
-        <img
-          src="/images/HERO%20CORRETA.webp"
-          alt="Fachada arquitetônica da Clínica Odontológica OralMaxx"
-          className="w-full h-full object-cover object-[62%_center] lg:object-[right_center] xl:object-[72%_center]"
-          loading="eager"
-          decoding="async"
-          fetchPriority="high"
-        />
-      </picture>
+    <section id="hero" ref={ref} className="relative bg-brand-blue-tint pt-[76px]" aria-label="Apresentação da Clínica OralMaxx">
+      <div className="mx-auto grid max-w-[1360px] items-center gap-10 px-5 pb-14 pt-8 sm:px-8 lg:min-h-[calc(100svh-76px-84px)] lg:grid-cols-[0.92fr_1.08fr] lg:gap-14 lg:px-12 lg:pb-16 lg:pt-10">
+        <div>
+          <motion.p {...fade(0.1)} className="mb-6 flex items-center gap-3 text-[12px] font-bold uppercase tracking-[0.22em] text-brand-navy-intermediate">
+            <span className="h-[1.5px] w-10 bg-brand-blue" aria-hidden="true" />
+            {ORALMAXX_CONFIG.brand.eyebrow}
+          </motion.p>
 
-      {/* Overlay Gradiente Fiel à Imagem de Referência */}
-      <div
-        className="absolute inset-0 pointer-events-none hero-gradient-desktop hidden md:block"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute inset-0 pointer-events-none hero-gradient-mobile md:hidden"
-        aria-hidden="true"
-      />
-
-      {/* Sutil escurecimento na base para conduzir ao scroll */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-brand-navy-deep/60 to-transparent pointer-events-none"
-        aria-hidden="true"
-      />
-
-      {/* Conteúdo Textual e Interativo */}
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-14 py-16 sm:py-20 lg:py-24">
-        <div className="max-w-xl xl:max-w-2xl text-left">
-          {/* Eyebrow */}
-          <div className="flex items-center gap-3.5 mb-5 sm:mb-6">
-            <span className="text-[11px] sm:text-[12px] md:text-[13px] font-bold tracking-[0.24em] text-brand-blue uppercase">
-              {ORALMAXX_CONFIG.brand.eyebrow}
+          <h1 className="hero-headline text-brand-navy-dark" aria-label={ORALMAXX_CONFIG.brand.headline}>
+            <span aria-hidden="true">
+              <SplitWords text="Seu sorriso" onLoad delay={0.2} />
+              <br />
+              <SplitWords text="merece esse" onLoad delay={0.4} />
+              <br />
+              <SplitWords text="cuidado." onLoad delay={0.6} italicFrom={0} />
             </span>
-            <span
-              className="h-[1.5px] w-12 sm:w-16 bg-brand-blue/70 inline-block rounded-full"
-              aria-hidden="true"
-            />
-          </div>
-
-          {/* Headline Principal Serifada Editorial */}
-          <h1 className="hero-headline text-white font-serif font-semibold mb-5 sm:mb-6 drop-shadow-md tracking-[-0.015em]">
-            Seu sorriso <br />
-            merece esse <br />
-            cuidado.
           </h1>
 
-          {/* Texto de Apoio */}
-          <p className="text-base sm:text-lg md:text-[19px] text-white/95 leading-relaxed max-w-lg mb-8 sm:mb-9 font-normal drop-shadow-sm">
+          <motion.p {...fade(0.9)} className="mt-6 max-w-md text-[17px] leading-relaxed text-ink-secondary sm:text-lg">
             {ORALMAXX_CONFIG.brand.tagline}
-          </p>
+          </motion.p>
 
-          {/* Grupo de Botões e CTAs */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-3">
-            {/* CTA Principal WhatsApp */}
+          <motion.div {...fade(1.05)} className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
             <a
               href={getWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full bg-[#6DBBEF] hover:bg-[#5CA9DE] text-[#0D2945] font-bold text-[15px] sm:text-[16px] shadow-pill hover:shadow-pill-hover hover:-translate-y-0.5 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 focus:ring-offset-brand-navy-dark"
+              className="group inline-flex items-center justify-center gap-3 rounded-full bg-brand-navy px-8 py-4 text-[15px] font-semibold text-white shadow-elevated transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-navy-deep"
             >
-              <WhatsAppIcon className="w-5 h-5 transition-transform duration-200 group-hover:scale-110 text-[#0D2945]" />
-              <span>Agendar pelo WhatsApp</span>
+              <WhatsAppIcon className="h-5 w-5 text-brand-blue" />
+              Agendar pelo WhatsApp
             </a>
-
-            {/* CTA Secundário: Conheça a clínica */}
-            <a
-              href="#clinica"
-              className="inline-flex items-center gap-2 text-white hover:text-brand-blue text-[15px] sm:text-[16px] font-medium transition-colors py-2 border-b border-white/60 hover:border-brand-blue group self-start sm:self-auto drop-shadow-sm"
-            >
-              <span>Conheça a clínica</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+            <a href="#clinica" className="group inline-flex items-center gap-2 text-[15px] font-semibold text-brand-navy-dark">
+              <span className="border-b border-brand-navy-dark/30 pb-0.5 transition-colors group-hover:border-brand-blue">Conheça a clínica</span>
+              <ArrowDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-1" />
             </a>
-          </div>
-
-          {/* Microcopy */}
-          <p className="text-xs sm:text-[13px] text-white/80 tracking-wide pl-1 pb-8 sm:pb-0">
+          </motion.div>
+          <motion.p {...fade(1.15)} className="mt-4 text-sm text-ink-muted">
             Vamos conversar sobre o seu sorriso?
-          </p>
+          </motion.p>
         </div>
+
+        {/* Foto real da fachada */}
+        <motion.div className="relative" style={{ y: reduce ? 0 : frameY }}>
+          <motion.div
+            className="relative aspect-[4/4.6] overflow-hidden rounded-[28px] bg-brand-blue-soft sm:aspect-[5/4] lg:aspect-auto lg:h-[min(66vh,620px)] lg:rounded-[36px]"
+            initial={reduce ? false : { clipPath: 'inset(0 0 100% 0 round 36px)' }}
+            animate={{ clipPath: 'inset(0 0 0% 0 round 36px)' }}
+            transition={{ duration: 1.5, ease: EASE, delay: 0.15 }}
+          >
+            <motion.picture style={{ y: reduce ? 0 : imgY }} className="absolute inset-x-0 -top-[6%] block h-[112%]">
+              <source media="(max-width: 767px)" srcSet="/images/clinica-hero-mobile.webp" />
+              <motion.img
+                src="/images/clinica-hero-2000.webp"
+                srcSet="/images/clinica-hero-1000.webp 1000w, /images/clinica-hero-2000.webp 2000w"
+                sizes="(min-width: 1024px) 55vw, 100vw"
+                alt="Fachada da Clínica Odontológica OralMaxx com o setor de Radiologia integrado"
+                className="h-full w-full object-cover object-[55%_45%]"
+                initial={reduce ? false : { scale: 1.25 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 2.2, ease: EASE, delay: 0.15 }}
+              />
+            </motion.picture>
+          </motion.div>
+
+          <motion.div
+            {...fade(1.2)}
+            className="absolute -bottom-5 left-4 flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-elevated sm:left-8"
+          >
+            <span className="grid h-10 w-10 place-items-center rounded-full bg-brand-blue-soft text-brand-navy">
+              <ScanLine className="h-5 w-5" />
+            </span>
+            <span className="leading-tight">
+              <span className="block text-[13px] font-semibold text-brand-navy-dark">Radiologia integrada</span>
+              <span className="block text-xs text-ink-secondary">No mesmo complexo da clínica</span>
+            </span>
+          </motion.div>
+
+          <motion.div
+            {...fade(1.35)}
+            className="absolute -top-4 right-4 hidden items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-elevated sm:flex"
+          >
+            <span className="grid h-10 w-10 place-items-center rounded-full bg-brand-blue-soft text-brand-navy">
+              <ShieldCheck className="h-5 w-5" />
+            </span>
+            <span className="leading-tight">
+              <span className="block text-[13px] font-semibold text-brand-navy-dark">{technicalDirector.title}</span>
+              <span className="block text-xs text-ink-secondary">{technicalDirector.cro}</span>
+            </span>
+          </motion.div>
+        </motion.div>
       </div>
 
-      {/* Indicador Inferior de Rolagem */}
-      <div className="absolute bottom-4 sm:bottom-6 left-0 right-0 z-20 flex justify-center pointer-events-auto">
-        <a
-          href="#clinica"
-          className="group inline-flex flex-col items-center gap-1.5 text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-brand-blue rounded-full p-2"
-          aria-label="Rolar para a seção Conheça a OralMaxx"
-        >
-          <span className="text-[12px] sm:text-[13px] font-medium tracking-wide">
-            Conheça a OralMaxx
-          </span>
-          <ArrowDown className="w-4 h-4 animate-float-gentle text-brand-blue group-hover:text-white transition-colors" />
-        </a>
-      </div>
+      <Marquee />
     </section>
   );
 };

@@ -4,7 +4,6 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -23,7 +22,7 @@
 /* Tipografia Editorial Hero */
 .hero-headline {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(2.75rem, 6.2vw, 5.25rem);
+  font-size: clamp(3rem, 11.5vw, 6.4rem);
   line-height: 0.98;
   letter-spacing: -0.02em;
   font-weight: 500;
@@ -31,62 +30,18 @@
 
 .section-headline {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+  font-size: clamp(2.2rem, 7.4vw, 4rem);
   line-height: 1.08;
   letter-spacing: -0.015em;
   font-weight: 600;
 }
 
-/* Gradiente Hero Fiel à Referência */
-/* linear-gradient(90deg, rgba(7, 32, 57, 0.94) 0%, rgba(7, 32, 57, 0.77) 28%, rgba(7, 32, 57, 0.25) 56%, rgba(7, 32, 57, 0) 75%) */
-.hero-gradient-desktop {
-  background: linear-gradient(
-    90deg,
-    rgba(7, 32, 57, 0.94) 0%,
-    rgba(7, 32, 57, 0.82) 28%,
-    rgba(7, 32, 57, 0.42) 52%,
-    rgba(7, 32, 57, 0.12) 68%,
-    rgba(7, 32, 57, 0) 80%
-  );
+@keyframes marquee {
+  to { transform: translateX(-50%); }
 }
 
-.hero-gradient-mobile {
-  background: linear-gradient(
-    180deg,
-    rgba(7, 32, 57, 0.92) 0%,
-    rgba(7, 32, 57, 0.85) 45%,
-    rgba(7, 32, 57, 0.5) 75%,
-    rgba(7, 32, 57, 0.2) 100%
-  );
-}
-
-/* Micro-animações suaves */
-@keyframes floatGentle {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(6px);
-  }
-}
-
-.animate-float-gentle {
-  animation: floatGentle 2.6s ease-in-out infinite;
-}
-
-@keyframes pulseSubtle {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 4px 16px rgba(109, 187, 239, 0.35);
-  }
-  50% {
-    transform: scale(1.02);
-    box-shadow: 0 8px 24px rgba(109, 187, 239, 0.55);
-  }
-}
-
-.animate-pulse-subtle {
-  animation: pulseSubtle 3s ease-in-out infinite;
+.animate-marquee {
+  animation: marquee 38s linear infinite;
 }
 
 /* Acessibilidade para redução de movimento */
@@ -98,3 +53,9 @@
     scroll-behavior: auto !important;
   }
 }
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+body { overflow-x: clip; }
+section[id] { scroll-margin-top: 64px; }

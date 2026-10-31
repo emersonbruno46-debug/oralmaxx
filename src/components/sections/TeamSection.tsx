@@ -1,135 +1,88 @@
 import React from 'react';
-import { Award, Users, CheckCircle2, ArrowRight } from 'lucide-react';
+import { ArrowRight, BadgeCheck, Stethoscope, Users } from 'lucide-react';
 import { ORALMAXX_CONFIG, getWhatsAppUrl } from '../../data/oralmaxxData';
+import { Reveal, SplitWords } from '../../lib/motion';
 
 export const TeamSection: React.FC = () => {
+  const { technicalDirector } = ORALMAXX_CONFIG.brand;
+
   return (
-    <section
-      id="equipe"
-      className="py-20 lg:py-28 bg-white relative overflow-hidden"
-      aria-label="Equipe Profissional da Clínica OralMaxx"
-    >
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-14">
-        {/* Cabeçalho da Seção */}
-        <div className="max-w-2xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center justify-center gap-2.5 mb-4">
-            <span className="text-xs sm:text-sm font-bold tracking-[0.22em] text-brand-navy uppercase">
-              QUEM CUIDA DE VOCÊ
-            </span>
-            <span className="h-[1.5px] w-8 bg-brand-blue inline-block rounded-full" aria-hidden="true" />
-          </div>
-
-          <h2 className="section-headline text-brand-navy-dark mb-5">
-            Pessoas que cuidam de pessoas.
-          </h2>
-
-          <p className="text-base sm:text-lg text-ink-secondary leading-relaxed">
-            Conheça a coordenação técnica e os profissionais que fazem parte da OralMaxx, comprometidos com a ética, precisão e acolhimento em cada etapa.
-          </p>
-        </div>
-
-        {/* Cards de Profissionais */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-14">
-          {/* Card Destaque: Responsável Técnico Oficial */}
-          <div className="bg-[#FAFAF8] rounded-3xl p-8 sm:p-10 border border-gray-200/70 shadow-soft hover:shadow-card-hover transition-all duration-300 relative flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-6">
-                <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-navy text-white text-xs font-semibold tracking-wide">
-                  <Award className="w-3.5 h-3.5 text-brand-blue" />
-                  <span>Responsável Técnico</span>
-                </span>
-                <span className="text-xs font-mono font-medium text-brand-navy-intermediate bg-brand-blue-soft px-3 py-1 rounded-md">
-                  {ORALMAXX_CONFIG.brand.technicalDirector.cro}
-                </span>
-              </div>
-
-              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-brand-navy-dark mb-2">
-                {ORALMAXX_CONFIG.brand.technicalDirector.name}
-              </h3>
-              
-              <p className="text-sm font-semibold text-brand-navy-intermediate mb-4">
-                Cirurgião-Dentista | {ORALMAXX_CONFIG.brand.technicalDirector.title}
+    <section id="equipe" className="relative overflow-hidden bg-brand-navy-deep py-24 text-white sm:py-32 lg:py-40" aria-labelledby="team-heading">
+      <img
+        src="/brand/oralmaxx-simbolo.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-24 top-10 h-[460px] w-[460px] opacity-[0.05] sm:h-[620px] sm:w-[620px]"
+      />
+      <div className="relative mx-auto max-w-[1360px] px-5 sm:px-8 lg:px-12">
+        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+          <div className="lg:sticky lg:top-32 lg:self-start">
+            <h2 id="team-heading" className="section-headline text-white">
+              <SplitWords text="Pessoas que cuidam de pessoas." />
+            </h2>
+            <Reveal>
+              <p className="mt-6 max-w-md text-[17px] leading-relaxed text-white/70">
+                Conheça a coordenação técnica e os profissionais que fazem parte da OralMaxx, comprometidos com a ética, precisão e
+                acolhimento em cada etapa.
               </p>
-
-              <p className="text-sm sm:text-[15px] text-ink-secondary leading-relaxed font-normal mb-6">
-                Supervisão clínica contínua focada em rigor científico, segurança do paciente e no cumprimento estrito das diretrizes éticas odontológicas.
-              </p>
-
-              <ul className="space-y-2.5 mb-6 text-xs sm:text-sm text-ink-secondary">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-brand-blue flex-shrink-0" />
-                  <span>Atendimento clínico individualizado e transparente</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-brand-blue flex-shrink-0" />
-                  <span>Planejamento integrado com radiologia da clínica</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="pt-4 border-t border-gray-200/60">
-              <span className="text-xs text-ink-muted">
-                Registro profissional regular perante o Conselho Regional de Odontologia de Minas Gerais.
-              </span>
-            </div>
-          </div>
-
-          {/* Card: Corpo Clínico Especializado */}
-          <div className="bg-[#FAFAF8] rounded-3xl p-8 sm:p-10 border border-gray-200/70 shadow-soft hover:shadow-card-hover transition-all duration-300 relative flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-6">
-                <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-blue-soft text-brand-navy text-xs font-semibold tracking-wide">
-                  <Users className="w-3.5 h-3.5 text-brand-navy" />
-                  <span>Corpo Clínico Integrado</span>
-                </span>
-                <span className="text-xs font-medium text-ink-secondary">
-                  Especialidades
-                </span>
-              </div>
-
-              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-brand-navy-dark mb-2">
-                Equipe Multidisciplinar
-              </h3>
-
-              <p className="text-sm font-semibold text-brand-navy-intermediate mb-4">
-                Cirurgiões-Dentistas Especializados
-              </p>
-
-              <p className="text-sm sm:text-[15px] text-ink-secondary leading-relaxed font-normal mb-6">
-                Profissionais qualificados nas diversas áreas da odontologia moderna — de implantes e ortodontia a cirurgias e estética facial —, atuando de forma colaborativa para planejar o melhor caminho terapêutico para você.
-              </p>
-
-              <ul className="space-y-2.5 mb-6 text-xs sm:text-sm text-ink-secondary">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-brand-blue flex-shrink-0" />
-                  <span>Especialistas em constante atualização científica</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-brand-blue flex-shrink-0" />
-                  <span>Suporte diagnóstico ágil e sem deslocamentos</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="pt-4 border-t border-gray-200/60">
               <a
                 href={getWhatsAppUrl('Olá! Gostaria de agendar uma consulta com um dos dentistas da OralMaxx.')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-brand-navy hover:text-brand-blue transition-colors group/cta"
+                className="group mt-8 inline-flex items-center gap-3 rounded-full bg-brand-blue px-7 py-3.5 text-[15px] font-semibold text-brand-navy-deep transition-colors hover:bg-white"
               >
-                <span>Agendar com a equipe no WhatsApp</span>
-                <ArrowRight className="w-4 h-4 text-brand-blue transition-transform group-hover/cta:translate-x-1" />
+                Agendar com a equipe no WhatsApp
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
-            </div>
+            </Reveal>
           </div>
-        </div>
 
-        {/* Informação Ética Obrigatória */}
-        <div className="text-center max-w-xl mx-auto">
-          <p className="text-xs text-ink-muted">
-            Todas as condutas e procedimentos clínicos seguem o Código de Ética Odontológica do Conselho Federal de Odontologia (CFO/CRO-MG).
-          </p>
+          <div className="space-y-5">
+            <Reveal>
+              <article className="rounded-[30px] bg-white p-7 text-brand-navy-dark sm:p-10">
+                <div className="flex items-start justify-between gap-4">
+                  <span className="grid h-16 w-16 place-items-center rounded-full bg-brand-navy font-serif text-2xl text-white">LS</span>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-brand-blue-soft px-4 py-2 text-[13px] font-semibold text-brand-navy">
+                    <BadgeCheck className="h-4 w-4" />
+                    {technicalDirector.cro}
+                  </span>
+                </div>
+                <h3 className="mt-8 font-serif text-3xl font-medium tracking-tight sm:text-4xl">{technicalDirector.name}</h3>
+                <p className="mt-2 text-[15px] font-semibold text-brand-navy-intermediate">
+                  Cirurgião-Dentista | {technicalDirector.title}
+                </p>
+                <p className="mt-5 text-[16px] leading-relaxed text-ink-secondary">
+                  Supervisão clínica contínua focada em rigor científico, segurança do paciente e no cumprimento estrito das
+                  diretrizes éticas odontológicas.
+                </p>
+                <ul className="mt-6 space-y-2.5 text-[15px] text-brand-navy-dark">
+                  {['Atendimento clínico individualizado e transparente', 'Planejamento integrado com radiologia da clínica'].map((t) => (
+                    <li key={t} className="flex items-start gap-3">
+                      <Stethoscope className="mt-0.5 h-4 w-4 shrink-0 text-brand-blue" />
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <article className="rounded-[30px] border border-white/15 bg-white/[0.04] p-7 sm:p-10">
+                <span className="grid h-14 w-14 place-items-center rounded-full bg-brand-blue text-brand-navy-deep">
+                  <Users className="h-6 w-6" />
+                </span>
+                <h3 className="mt-6 font-serif text-2xl font-medium tracking-tight sm:text-3xl">Cirurgiões-Dentistas Especializados</h3>
+                <p className="mt-4 text-[16px] leading-relaxed text-white/70">
+                  Profissionais qualificados nas diversas áreas da odontologia moderna — de implantes e ortodontia a cirurgias e
+                  estética facial —, atuando de forma colaborativa para planejar o melhor caminho terapêutico para você.
+                </p>
+                <p className="mt-5 text-sm text-white/50">
+                  Todas as condutas e procedimentos clínicos seguem o Código de Ética Odontológica do Conselho Federal de
+                  Odontologia (CFO/CRO-MG).
+                </p>
+              </article>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>

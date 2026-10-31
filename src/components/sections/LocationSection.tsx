@@ -1,190 +1,93 @@
 import React from 'react';
-import { MapPin, Phone, Clock, Instagram, ExternalLink, ArrowRight } from 'lucide-react';
+import { ArrowUpRight, Clock, Instagram, MapPin, Phone } from 'lucide-react';
 import { ORALMAXX_CONFIG, getWhatsAppUrl } from '../../data/oralmaxxData';
+import { Reveal, SplitWords } from '../../lib/motion';
+import { WhatsAppIcon } from '../ui/Icons';
 
-export const LocationSection: React.FC = () => {
-  return (
-    <section
-      id="localizacao"
-      className="py-20 lg:py-28 bg-[#F4F7FA] relative overflow-hidden"
-      aria-label="Localização e Contato da Clínica OralMaxx"
-    >
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-14">
-        {/* Cabeçalho da Seção */}
-        <div className="max-w-3xl mb-14 lg:mb-16">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs sm:text-sm font-bold tracking-[0.22em] text-brand-navy uppercase">
-              ONDE ESTAMOS
-            </span>
-            <span className="h-[1.5px] w-12 bg-brand-blue inline-block rounded-full" aria-hidden="true" />
-          </div>
+const { contact, location } = ORALMAXX_CONFIG;
 
-          <h2 className="section-headline text-brand-navy-dark mb-5">
-            Venha conhecer a OralMaxx.
-          </h2>
+const Row: React.FC<{ icon: React.ReactNode; label: string; children: React.ReactNode }> = ({ icon, label, children }) => (
+  <div className="flex gap-4 border-b border-brand-navy/10 py-5 last:border-b-0">
+    <span className="mt-0.5 grid h-11 w-11 shrink-0 place-items-center rounded-full bg-brand-blue-soft text-brand-navy">{icon}</span>
+    <div>
+      <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-ink-muted">{label}</p>
+      <div className="mt-1 text-[16px] leading-relaxed text-brand-navy-dark">{children}</div>
+    </div>
+  </div>
+);
 
-          <p className="text-base sm:text-lg text-ink-secondary leading-relaxed">
-            Estamos prontos para receber você em uma sede planejada para o seu bem-estar, com estacionamento fácil e atendimento acolhedor.
-          </p>
-        </div>
+export const LocationSection: React.FC = () => (
+  <section id="localizacao" className="bg-brand-blue-tint py-24 sm:py-32 lg:py-40" aria-labelledby="location-heading">
+    <div className="mx-auto max-w-[1360px] px-5 sm:px-8 lg:px-12">
+      <h2 id="location-heading" className="section-headline mb-12 max-w-[18ch] text-brand-navy-dark lg:mb-16">
+        <SplitWords text="Venha conhecer a OralMaxx." />
+      </h2>
 
-        {/* 2 Colunas: Informações de Contato + Apresentação Visual da Localização */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
-          {/* Coluna 1: Dados Institucionais */}
-          <div className="lg:col-span-6 flex flex-col justify-between space-y-6">
-            <div className="bg-white rounded-3xl p-8 sm:p-9 border border-gray-100 shadow-soft">
-              <h3 className="text-xl font-serif font-bold text-brand-navy-dark mb-6">
-                Canais de Atendimento
-              </h3>
-
-              <div className="space-y-6">
-                {/* WhatsApp Oficial */}
-                <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-2xl bg-brand-blue-soft flex items-center justify-center flex-shrink-0 text-brand-navy">
-                    <Phone className="w-5 h-5 text-brand-navy" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-ink-secondary">
-                      WhatsApp & Telefone Oficial
-                    </p>
-                    <a
-                      href={getWhatsAppUrl()}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-lg font-bold text-brand-navy-dark hover:text-brand-blue transition-colors"
-                    >
-                      {ORALMAXX_CONFIG.contact.phoneDisplay}
-                    </a>
-                    <p className="text-xs text-ink-secondary mt-0.5">
-                      Atendimento rápido para dúvidas e marcação de consultas
-                    </p>
-                  </div>
-                </div>
-
-                {/* Horários */}
-                <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-2xl bg-brand-blue-soft flex items-center justify-center flex-shrink-0 text-brand-navy">
-                    <Clock className="w-5 h-5 text-brand-navy" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-ink-secondary">
-                      Horário de Funcionamento
-                    </p>
-                    <p className="text-sm font-semibold text-brand-navy-dark mt-0.5">
-                      {ORALMAXX_CONFIG.location.hours[0].days}
-                    </p>
-                    <p className="text-xs text-ink-secondary">
-                      {ORALMAXX_CONFIG.location.hours[0].time}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Instagram Oficial */}
-                <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-2xl bg-brand-blue-soft flex items-center justify-center flex-shrink-0 text-brand-navy">
-                    <Instagram className="w-5 h-5 text-brand-navy" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-ink-secondary">
-                      Instagram Oficial
-                    </p>
-                    <a
-                      href={ORALMAXX_CONFIG.contact.instagramUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-bold text-brand-navy-dark hover:text-brand-blue transition-colors mt-0.5"
-                    >
-                      <span>{ORALMAXX_CONFIG.contact.instagramDisplay}</span>
-                      <ExternalLink className="w-3.5 h-3.5 text-brand-blue" />
-                    </a>
-                    <p className="text-xs text-ink-secondary mt-0.5">
-                      Acompanhe o dia a dia e dicas de saúde bucal
-                    </p>
-                  </div>
-                </div>
-
-                {/* Endereço */}
-                <div className="flex items-start gap-4 pt-4 border-t border-gray-100">
-                  <div className="w-11 h-11 rounded-2xl bg-brand-blue-soft flex items-center justify-center flex-shrink-0 text-brand-navy">
-                    <MapPin className="w-5 h-5 text-brand-navy" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-ink-secondary">
-                      Localização da Clínica
-                    </p>
-                    <p className="text-sm font-semibold text-brand-navy-dark mt-0.5">
-                      Clínica Odontológica OralMaxx & Radiologia
-                    </p>
-                    <p className="text-xs text-ink-secondary mt-1 leading-relaxed">
-                      Solicite a rota exata e localização em tempo real diretamente pelo WhatsApp da clínica.
-                    </p>
-                  </div>
-                </div>
-              </div>
+      <div className="grid gap-5 lg:grid-cols-[1fr_1fr] lg:gap-6">
+        <Reveal>
+          <div className="h-full rounded-[30px] bg-white p-6 shadow-card sm:p-9">
+            <Row icon={<MapPin className="h-5 w-5" />} label="Localização">
+              {location.city}
+              <br />
+              <span className="text-ink-secondary">Solicite o endereço exato e a rota pelo WhatsApp.</span>
+            </Row>
+            <Row icon={<Phone className="h-5 w-5" />} label="WhatsApp">
+              <a href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="font-semibold underline-offset-4 hover:underline">
+                {contact.phoneDisplay}
+              </a>
+            </Row>
+            <Row icon={<Instagram className="h-5 w-5" />} label="Instagram">
+              <a href={contact.instagramUrl} target="_blank" rel="noopener noreferrer" className="font-semibold underline-offset-4 hover:underline">
+                {contact.instagramDisplay}
+              </a>
+            </Row>
+            <Row icon={<Clock className="h-5 w-5" />} label="Horários">
+              <ul className="space-y-1">
+                {location.hours.map((h) => (
+                  <li key={h.days}>
+                    <span className="font-semibold">{h.days}:</span> <span className="text-ink-secondary">{h.time}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-2 text-sm text-ink-secondary">{location.note}</p>
+            </Row>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <a
+                href={getWhatsAppUrl('Olá! Gostaria de receber a localização exata e orientações de rota para a OralMaxx.')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-3 rounded-full bg-brand-navy px-7 py-4 text-[15px] font-semibold text-white transition-colors hover:bg-brand-navy-deep"
+              >
+                <WhatsAppIcon className="h-5 w-5 text-brand-blue" />
+                Solicitar rota e endereço
+              </a>
+              <a
+                href={contact.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-2 rounded-full border border-brand-navy/25 px-7 py-4 text-[15px] font-semibold text-brand-navy-dark transition-colors hover:bg-brand-blue-soft"
+              >
+                Ver fotos no Instagram
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
             </div>
-
-            {/* Botão de Rota */}
-            <a
-              href={getWhatsAppUrl('Olá! Gostaria de receber a localização exata e orientações de rota para a OralMaxx.')}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 w-full py-4 px-6 rounded-2xl bg-brand-navy-dark hover:bg-brand-navy text-white text-sm font-semibold transition-all shadow-sm hover:shadow-md group"
-            >
-              <MapPin className="w-4 h-4 text-brand-blue" />
-              <span>Solicitar rota e endereço no WhatsApp</span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </a>
           </div>
+        </Reveal>
 
-          {/* Coluna 2: Visual da Fachada com Detalhes de Acesso */}
-          <div className="lg:col-span-6 relative rounded-3xl overflow-hidden shadow-card border border-gray-100 bg-brand-navy-dark min-h-[360px] sm:min-h-[420px] flex flex-col justify-end p-8 sm:p-10 text-white group">
+        <Reveal delay={0.1}>
+          <figure className="relative h-full min-h-[360px] overflow-hidden rounded-[30px] bg-brand-blue-soft lg:min-h-[560px]">
             <img
-              src="/images/fachada-hero-1440.webp"
-              alt="Fachada arquitetônica da OralMaxx"
-              className="absolute inset-0 w-full h-full object-cover object-[center_center] transition-transform duration-700 group-hover:scale-105 opacity-80"
+              src="/images/clinica-hero-1000.webp"
+              alt="Fachada real da Clínica OralMaxx"
               loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover object-[55%_50%] transition-transform duration-[1600ms] ease-out hover:scale-[1.05]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-navy-deep via-brand-navy-deep/60 to-transparent" />
-
-            <div className="relative z-10">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold uppercase tracking-wider text-white mb-4">
-                <MapPin className="w-3.5 h-3.5 text-brand-blue" />
-                <span>Complexo Odontológico Próprio</span>
-              </span>
-
-              <h4 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">
-                OralMaxx & OralMaxx Radiologia
-              </h4>
-
-              <p className="text-sm text-white/85 leading-relaxed max-w-md mb-6 font-normal">
-                Sede moderna e acessível, combinando atendimento clínico geral, consultórios especializados e setor próprio de diagnóstico por imagem.
-              </p>
-
-              <div className="flex flex-wrap items-center gap-3">
-                <a
-                  href={getWhatsAppUrl('Olá! Gostaria de consultar os horários disponíveis para atendimento.')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-brand-blue text-brand-navy-dark text-xs sm:text-sm font-bold shadow-pill hover:bg-brand-blue-hover transition-all"
-                >
-                  <span>Consultar horários</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </a>
-
-                <a
-                  href={ORALMAXX_CONFIG.contact.instagramUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium transition-colors"
-                >
-                  <Instagram className="w-3.5 h-3.5" />
-                  <span>Ver fotos no Instagram</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+            <figcaption className="absolute bottom-5 left-5 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-brand-navy-dark shadow-elevated">
+              Complexo odontológico próprio
+            </figcaption>
+          </figure>
+        </Reveal>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);

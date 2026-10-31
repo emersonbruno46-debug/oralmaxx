@@ -1,114 +1,90 @@
-import React from 'react';
-import { Sparkles, ShieldCheck, Clock, ArrowRight } from 'lucide-react';
+import React, { useRef } from 'react';
+import { motion, MotionValue, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, Building2, HeartHandshake, Hourglass } from 'lucide-react';
 import { getWhatsAppUrl } from '../../data/oralmaxxData';
+import { Reveal } from '../../lib/motion';
+
+const STATEMENT =
+  'Um espaço dedicado ao cuidado com o seu sorriso. Reunimos consultórios modernos, equipe multiprofissional e diagnóstico por imagem em um único endereço.';
+
+const FEATURES = [
+  { icon: HeartHandshake, title: 'Acolhimento individual', text: 'Planos pensados respeitando suas necessidades reais.' },
+  { icon: Hourglass, title: 'Pontualidade & conforto', text: 'Ambiente acolhedor e atendimento organizado.' },
+  { icon: Building2, title: 'Sede própria', text: 'Arquitetura moderna com setor de Radiologia Integrada.' },
+];
+
+const Word: React.FC<{ word: string; range: [number, number]; progress: MotionValue<number>; reduce: boolean }> = ({
+  word,
+  range,
+  progress,
+  reduce,
+}) => {
+  const opacity = useTransform(progress, range, [0.16, 1]);
+  return (
+    <motion.span className="mr-[0.26em] inline-block" style={{ opacity: reduce ? 1 : opacity }}>
+      {word}
+    </motion.span>
+  );
+};
 
 export const AboutSection: React.FC = () => {
+  const reduce = !!useReducedMotion();
+  const ref = useRef<HTMLParagraphElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.85', 'end 0.5'] });
+  const words = STATEMENT.split(' ');
+
   return (
-    <section
-      id="clinica"
-      className="py-20 lg:py-28 bg-[#FAFAF8] relative overflow-hidden"
-      aria-label="Sobre a Clínica OralMaxx"
-    >
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-14">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Coluna Esquerda: Composição Visual com Imagem Real */}
-          <div className="lg:col-span-6 relative">
-            <div className="relative mx-auto max-w-lg lg:max-w-none">
-              {/* Imagem Principal da Estrutura */}
-              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-card border border-brand-navy/5 aspect-[4/3] bg-brand-navy-dark">
-                <img
-                  src="/images/fachada-placa.webp"
-                  alt="Estrutura e comunicação visual da Clínica OralMaxx"
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy-deep/60 via-transparent to-transparent pointer-events-none" />
-                
-                {/* Badge Sutil sobre a Imagem */}
-                <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6 bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-soft border border-white/40 flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-full bg-brand-blue-soft flex items-center justify-center flex-shrink-0 text-brand-navy">
-                    <Sparkles className="w-5 h-5 text-brand-navy" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-wider text-brand-navy">
-                      Sede Própria & Estrutura Completa
-                    </p>
-                    <p className="text-xs text-ink-secondary">
-                      Arquitetura moderna com setor de Radiologia Integrada
-                    </p>
-                  </div>
-                </div>
-              </div>
+    <section id="clinica" className="bg-white py-24 sm:py-32 lg:py-40" aria-labelledby="about-statement">
+      <div className="mx-auto max-w-[1360px] px-5 sm:px-8 lg:px-12">
+        <Reveal>
+          <p className="mb-8 flex items-center gap-3 text-[12px] font-bold uppercase tracking-[0.22em] text-brand-navy-intermediate">
+            <span className="h-[1.5px] w-10 bg-brand-blue" aria-hidden="true" />
+            Sede própria & estrutura completa
+          </p>
+        </Reveal>
 
-              {/* Elemento Decorativo Sutil no Fundo */}
-              <div
-                className="absolute -bottom-4 -right-4 w-40 h-40 bg-brand-blue/10 rounded-3xl -z-10"
-                aria-hidden="true"
-              />
-            </div>
-          </div>
+        <h2
+          id="about-statement"
+          ref={ref}
+          className="max-w-[22ch] font-serif text-[2.1rem] font-medium leading-[1.12] tracking-[-0.02em] text-brand-navy-dark sm:text-5xl lg:max-w-[26ch] lg:text-[3.9rem]"
+        >
+          {words.map((w, i) => (
+            <Word key={i} word={w} range={[i / words.length, Math.min(1, (i + 1) / words.length + 0.08)]} progress={scrollYProgress} reduce={reduce} />
+          ))}
+        </h2>
 
-          {/* Coluna Direita: Conteúdo Editorial */}
-          <div className="lg:col-span-6">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs sm:text-sm font-bold tracking-[0.22em] text-brand-navy uppercase">
-                CONHEÇA A ORALMAXX
-              </span>
-              <span className="h-[1.5px] w-12 bg-brand-blue inline-block rounded-full" aria-hidden="true" />
-            </div>
-
-            <h2 className="section-headline text-brand-navy-dark mb-6">
-              Um espaço dedicado ao cuidado com o seu sorriso.
-            </h2>
-
-            <p className="text-base sm:text-lg text-ink-secondary leading-relaxed mb-6 font-normal">
-              Na OralMaxx, acreditamos que cuidar do sorriso envolve atenção, confiança e uma experiência acolhedora. Queremos que você se sinta bem desde o primeiro contato, com informações claras e cuidado em cada etapa.
+        <div className="mt-16 grid gap-10 lg:mt-24 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
+          <Reveal>
+            <p className="max-w-md text-[17px] leading-relaxed text-ink-secondary">
+              Na OralMaxx, acreditamos que cuidar do sorriso envolve atenção, confiança e uma experiência acolhedora. Queremos que
+              você se sinta bem desde o primeiro contato, com informações claras e cuidado em cada etapa.
             </p>
+            <a
+              href={getWhatsAppUrl('Olá! Gostaria de conhecer melhor a clínica OralMaxx e agendar uma consulta.')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-8 inline-flex items-center gap-3 rounded-full bg-brand-navy px-7 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-brand-navy-deep"
+            >
+              Falar com a nossa recepção
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+          </Reveal>
 
-            <p className="text-sm sm:text-base text-ink-secondary leading-relaxed mb-8">
-              Nossa clínica foi planejada para reunir em um único endereço consultórios modernos, equipe multiprofissional e serviços integrados de diagnóstico por imagem, proporcionando tranquilidade e precisão no planejamento odontológico.
-            </p>
-
-            {/* Diferenciais Editoriais */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-9">
-              <div className="flex items-start gap-3 p-4 rounded-xl bg-white border border-gray-100 shadow-soft">
-                <ShieldCheck className="w-5 h-5 text-brand-navy mt-0.5 flex-shrink-0" />
-                <div>
-                  <h3 className="text-sm font-semibold text-brand-navy-dark">Acolhimento Individual</h3>
-                  <p className="text-xs text-ink-secondary mt-0.5">Planos pensados respeitando suas necessidades reais.</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 p-4 rounded-xl bg-white border border-gray-100 shadow-soft">
-                <Clock className="w-5 h-5 text-brand-navy mt-0.5 flex-shrink-0" />
-                <div>
-                  <h3 className="text-sm font-semibold text-brand-navy-dark">Pontualidade & Conforto</h3>
-                  <p className="text-xs text-ink-secondary mt-0.5">Ambiente acolhedor e atendimento organizado.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Ações */}
-            <div className="flex flex-wrap items-center gap-4">
-              <a
-                href={getWhatsAppUrl('Olá! Gostaria de conhecer melhor a clínica OralMaxx e agendar uma consulta.')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-brand-navy-dark hover:bg-brand-navy text-white text-sm font-semibold shadow-sm hover:shadow-md transition-all group"
-              >
-                <span>Falar com a nossa recepção</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </a>
-
-              <a
-                href="#tratamentos"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-navy hover:text-brand-blue py-3 px-2 transition-colors"
-              >
-                <span>Ver tratamentos disponíveis</span>
-                <span aria-hidden="true">↓</span>
-              </a>
-            </div>
-          </div>
+          <ul className="grid gap-4 sm:grid-cols-3 lg:gap-5">
+            {FEATURES.map(({ icon: Icon, title, text }, i) => (
+              <li key={title}>
+                <Reveal delay={i * 0.1} className="h-full">
+                  <div className="group h-full rounded-[22px] bg-brand-blue-tint p-6 transition-all duration-500 hover:-translate-y-1.5 hover:bg-brand-blue-soft hover:shadow-card-hover">
+                    <span className="mb-10 grid h-12 w-12 place-items-center rounded-full bg-white text-brand-navy shadow-soft transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-110">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <h3 className="text-[15px] font-semibold text-brand-navy-dark">{title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-ink-secondary">{text}</p>
+                  </div>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

@@ -1,67 +1,43 @@
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { getWhatsAppUrl } from '../../data/oralmaxxData';
+import { Reveal, SplitWords } from '../../lib/motion';
+import { WhatsAppIcon } from '../ui/Icons';
 
 export const FinalCtaSection: React.FC = () => {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const rotate = useTransform(scrollYProgress, [0, 1], [-18, 18]);
+  const y = useTransform(scrollYProgress, [0, 1], ['10%', '-10%']);
+
   return (
-    <section
-      className="py-20 lg:py-28 bg-white relative overflow-hidden"
-      aria-label="Chamada Final para Agendamento"
-    >
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-14">
-        {/* Bloco Nobre Azul-Marinho Profundo */}
-        <div className="relative rounded-3xl lg:rounded-[36px] bg-brand-navy-deep overflow-hidden p-8 sm:p-14 lg:p-20 shadow-elevated">
-          {/* Elemento Gráfico de Marca no Fundo com o Símbolo Oficial */}
-          <div
-            className="absolute -right-16 -bottom-24 w-80 sm:w-[480px] h-80 sm:h-[480px] opacity-10 pointer-events-none select-none"
-            aria-hidden="true"
+    <section ref={ref} className="relative overflow-hidden bg-brand-navy py-28 text-white sm:py-36 lg:py-44" aria-labelledby="cta-heading">
+      <motion.img
+        src="/brand/oralmaxx-simbolo.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-16 top-1/2 h-[420px] w-[420px] -translate-y-1/2 opacity-[0.09] sm:h-[620px] sm:w-[620px] lg:right-10"
+        style={{ rotate: reduce ? 0 : rotate, y: reduce ? 0 : y }}
+      />
+      <div className="relative mx-auto max-w-[1360px] px-5 sm:px-8 lg:px-12">
+        <h2 id="cta-heading" className="max-w-[16ch] font-serif text-[2.9rem] font-medium leading-[1.02] tracking-[-0.025em] sm:text-7xl lg:text-[6.2rem]">
+          <SplitWords text="Seu sorriso merece atenção em cada detalhe." />
+        </h2>
+        <Reveal delay={0.2}>
+          <p className="mt-8 max-w-lg text-lg leading-relaxed text-white/75">
+            Entre em contato com a OralMaxx e dê o primeiro passo para cuidar da saúde e da beleza do seu sorriso com tranquilidade.
+          </p>
+          <a
+            href={getWhatsAppUrl('Olá! Gostaria de dar início ao meu agendamento na OralMaxx.')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-10 inline-flex items-center gap-3 rounded-full bg-brand-blue px-9 py-5 text-[16px] font-bold text-brand-navy-deep transition-all duration-300 hover:-translate-y-0.5 hover:bg-white"
           >
-            <img
-              src="/brand/oralmaxx-simbolo.svg"
-              alt=""
-              className="w-full h-full object-contain filter invert"
-            />
-          </div>
-
-          {/* Sutil brilho azul-claro no topo esquerdo */}
-          <div
-            className="absolute -top-24 -left-24 w-96 h-96 bg-brand-blue/15 rounded-full blur-3xl pointer-events-none"
-            aria-hidden="true"
-          />
-
-          <div className="relative z-10 max-w-2xl">
-            <div className="flex items-center gap-3 mb-5">
-              <span className="text-xs sm:text-sm font-bold tracking-[0.24em] text-brand-blue uppercase">
-                CLÍNICA ODONTOLÓGICA ORALMAXX
-              </span>
-              <span className="h-[1.5px] w-12 bg-brand-blue/70 inline-block rounded-full" aria-hidden="true" />
-            </div>
-
-            <h2 className="hero-headline text-white font-serif mb-6 leading-tight">
-              Seu sorriso merece atenção em cada detalhe.
-            </h2>
-
-            <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed font-normal mb-9 max-w-xl">
-              Entre em contato com a OralMaxx e dê o primeiro passo para cuidar da saúde e da beleza do seu sorriso com tranquilidade.
-            </p>
-
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-              <a
-                href={getWhatsAppUrl('Olá! Gostaria de agendar uma consulta na OralMaxx.')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-brand-blue hover:bg-brand-blue-hover text-brand-navy-dark font-bold text-base shadow-pill hover:shadow-pill-hover hover:-translate-y-0.5 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 focus:ring-offset-brand-navy-dark"
-              >
-                <span>Agendar pelo WhatsApp</span>
-                <ArrowRight className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" />
-              </a>
-
-              <span className="text-xs sm:text-sm text-white/70">
-                Atendimento humanizado de segunda a sexta
-              </span>
-            </div>
-          </div>
-        </div>
+            <WhatsAppIcon className="h-5 w-5" />
+            Iniciar conversa no WhatsApp
+          </a>
+        </Reveal>
       </div>
     </section>
   );
