@@ -56,7 +56,7 @@ export const Navbar: React.FC = () => {
       >
         <div className="mx-auto flex h-full max-w-[1360px] items-center justify-between gap-6 px-5 sm:px-8 lg:px-12">
           <a href="#inicio" aria-label="OralMaxx — voltar ao topo" className="shrink-0">
-            <img src="/brand/oralmaxx-logo.svg" alt="Clínica OralMaxx" className="h-9 sm:h-10 w-auto" />
+            <img src={scrolled ? '/brand/oralmaxx-logo.svg' : '/brand/oralmaxx-logo-negativo.svg'} alt="Clínica OralMaxx" className="h-9 sm:h-10 w-auto" />
           </a>
 
           <nav className="hidden lg:flex items-center gap-9" aria-label="Navegação principal">
@@ -64,7 +64,7 @@ export const Navbar: React.FC = () => {
               <a
                 key={item.href}
                 href={item.href}
-                className="group relative py-2 text-[15px] font-medium text-brand-navy-dark"
+                className={`group relative py-2 text-[15px] font-medium transition-colors duration-500 ${scrolled ? 'text-brand-navy-dark' : 'text-white'}`}
               >
                 {item.label}
                 <span className="absolute inset-x-0 bottom-0 h-[1.5px] origin-right scale-x-0 bg-brand-blue transition-transform duration-500 group-hover:origin-left group-hover:scale-x-100" />
@@ -77,13 +77,13 @@ export const Navbar: React.FC = () => {
               href={getWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-brand-navy-deep"
+              className={`hidden sm:inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${scrolled ? 'bg-brand-navy text-white hover:bg-brand-navy-deep' : 'bg-white text-brand-navy-dark hover:bg-brand-blue'}`}
             >
               Agendar consulta <ArrowRight className="h-4 w-4" />
             </a>
             <button
               type="button"
-              className="lg:hidden -mr-2 grid h-11 w-11 place-items-center rounded-full text-brand-navy-dark"
+              className={`lg:hidden -mr-2 grid h-11 w-11 place-items-center rounded-full transition-colors duration-500 ${scrolled ? 'text-brand-navy-dark' : 'text-white'}`}
               onClick={() => setOpen(true)}
               aria-label="Abrir menu"
               aria-expanded={open}

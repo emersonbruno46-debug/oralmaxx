@@ -3,6 +3,7 @@ import { Navbar } from './components/layout/Navbar';
 import { Hero } from './components/sections/Hero';
 import { AboutSection } from './components/sections/AboutSection';
 import { TreatmentsSection } from './components/sections/TreatmentsSection';
+import { GuideSection } from './components/sections/GuideSection';
 import { StructureSection } from './components/sections/StructureSection';
 import { TeamSection } from './components/sections/TeamSection';
 import { JourneySection } from './components/sections/JourneySection';
@@ -23,6 +24,7 @@ export const App: React.FC = () => {
         <Hero />
         <AboutSection />
         <TreatmentsSection />
+        <GuideSection />
         <StructureSection />
         <TeamSection />
         <JourneySection />

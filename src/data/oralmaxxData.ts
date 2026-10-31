@@ -235,39 +235,65 @@ export const SPECIALTIES = [
 ];
 
 /**
- * Galeria da Estrutura
+ * Tour pela fachada: cada parada dá zoom em um ponto da foto real.
+ * x/y = centro do foco (0 a 1) · scale = zoom
  */
-export const STRUCTURE_GALLERY = [
+export const STRUCTURE_TOUR = [
   {
     id: 'fachada-principal',
     title: 'Fachada Arquitetônica Contemporânea',
     description: 'Design moderno com revestimento amadeirado, comunicação visual marcante e acessibilidade.',
-    imageUrl: '/images/fachada-hero-1440.webp',
-    area: 'lg:col-span-8',
-    ratio: 'aspect-[16/10] lg:aspect-auto lg:h-[420px]',
-  },
-  {
-    id: 'radiologia-integrada',
-    title: 'OralMaxx Radiologia Integrada',
-    description: 'Torre envidraçada e setor de diagnóstico por imagem para agilidade no planejamento.',
-    imageUrl: '/images/clinica-torre.webp',
-    area: 'lg:col-span-4 lg:row-span-2',
-    ratio: 'aspect-[4/5] lg:aspect-auto lg:h-full',
+    imageUrl: '/images/clinica-hero-1000.webp',
+    x: 0.5,
+    y: 0.5,
+    scale: 1,
   },
   {
     id: 'comunicacao-visual',
     title: 'Identidade & Acolhimento',
     description: 'Fachada tratada com acabamento em madeira e identidade visual de alto padrão.',
     imageUrl: '/images/clinica-placa.webp',
-    area: 'lg:col-span-4',
-    ratio: 'aspect-[16/10] lg:aspect-auto lg:h-[320px]',
+    x: 0.325,
+    y: 0.5,
+    scale: 2.7,
   },
   {
     id: 'acesso-principal',
     title: 'Entrada & Recepção',
     description: 'Portas envidraçadas e paisagismo integrado planejados para o seu conforto.',
     imageUrl: '/images/clinica-entrada.webp',
-    area: 'lg:col-span-4',
-    ratio: 'aspect-[16/10] lg:aspect-auto lg:h-[320px]',
+    x: 0.375,
+    y: 0.72,
+    scale: 2.8,
+  },
+  {
+    id: 'radiologia-integrada',
+    title: 'OralMaxx Radiologia Integrada',
+    description: 'Torre envidraçada e setor de diagnóstico por imagem para agilidade no planejamento.',
+    imageUrl: '/images/clinica-torre.webp',
+    x: 0.64,
+    y: 0.42,
+    scale: 1.9,
   },
 ];
+
+/** Outro ângulo da fachada (imagem de apoio) */
+export const STRUCTURE_RENDER = {
+  title: 'Vista da esquina',
+  description: 'Arquitetura contemporânea integrada ao entorno, com acesso à clínica e à radiologia.',
+  imageUrl: '/images/fachada-hero-1440.webp',
+};
+
+/**
+ * Guia "por onde começar": objetivo → tratamento sugerido
+ */
+export const GUIDE_GOALS = [
+  { id: 'repor', label: 'Repor um dente', treatmentId: 'implantes' },
+  { id: 'alinhar', label: 'Alinhar os dentes', treatmentId: 'ortodontia' },
+  { id: 'clarear', label: 'Clarear e embelezar o sorriso', treatmentId: 'estetica' },
+  { id: 'face', label: 'Equilibrar os traços do rosto', treatmentId: 'harmonizacao' },
+  { id: 'dor', label: 'Estou com dor ou desconforto', treatmentId: 'endodontia-cirurgia' },
+  { id: 'checkup', label: 'Fazer um check-up', treatmentId: 'clinica-geral' },
+];
+
+export const GUIDE_TIMING = ['O quanto antes', 'Nas próximas semanas', 'Estou só pesquisando'];
