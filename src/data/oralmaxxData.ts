@@ -281,7 +281,30 @@ export const STRUCTURE_TOUR = [
 export const STRUCTURE_RENDER = {
   title: 'Vista da esquina',
   description: 'Arquitetura contemporânea integrada ao entorno, com acesso à clínica e à radiologia.',
-  imageUrl: '/images/fachada-hero-1440.webp',
+  imageUrl: '/images/esquina-1400.webp',
+  srcSet: '/images/esquina-720.webp 720w, /images/esquina-1400.webp 1400w',
+};
+
+/** Fotos reais da recepção */
+export const RECEPTION = {
+  title: 'Recepção',
+  description: 'Ambiente amplo, climatizado e confortável para aguardar o seu atendimento.',
+  photos: [
+    {
+      src: '/images/recepcao-1400.webp',
+      srcSet: '/images/recepcao-720.webp 720w, /images/recepcao-1400.webp 1400w',
+      alt: 'Recepção da Clínica OralMaxx com poltronas, TV e painel amadeirado',
+      w: 1400,
+      h: 933,
+    },
+    {
+      src: '/images/recepcao-vertical-1000.webp',
+      srcSet: '/images/recepcao-vertical-640.webp 640w, /images/recepcao-vertical-1000.webp 1000w',
+      alt: 'Sala de espera da OralMaxx com poltronas brancas e iluminação indireta',
+      w: 1000,
+      h: 1500,
+    },
+  ],
 };
 
 /**

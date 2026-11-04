@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { STRUCTURE_RENDER, STRUCTURE_TOUR } from '../../data/oralmaxxData';
+import { RECEPTION, STRUCTURE_RENDER, STRUCTURE_TOUR } from '../../data/oralmaxxData';
 import { EASE, Reveal, SplitWords } from '../../lib/motion';
 
 const RATIO = 3 / 2; // proporção da foto real (5184 x 3456)
@@ -144,11 +144,42 @@ export const StructureSection: React.FC = () => {
 
       {reduce ? <StaticGrid /> : <Tour />}
 
+      <div className="mx-auto max-w-[1360px] px-5 pt-16 sm:px-8 lg:px-12 lg:pt-24">
+        <Reveal>
+          <div className="mb-8 max-w-xl">
+            <h3 className="font-serif text-3xl font-medium leading-tight tracking-tight text-brand-navy-dark sm:text-4xl">
+              {RECEPTION.title}
+            </h3>
+            <p className="mt-3 text-[17px] leading-relaxed text-ink-secondary">{RECEPTION.description}</p>
+          </div>
+        </Reveal>
+        <Reveal>
+          <div className="grid gap-4 md:grid-cols-[1.5fr_1fr] md:items-stretch">
+            {RECEPTION.photos.map((ph) => (
+              <figure key={ph.src} className="overflow-hidden rounded-[26px] bg-brand-blue-soft">
+                <img
+                  src={ph.src}
+                  srcSet={ph.srcSet}
+                  sizes="(min-width: 768px) 55vw, 100vw"
+                  alt={ph.alt}
+                  width={ph.w}
+                  height={ph.h}
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+              </figure>
+            ))}
+          </div>
+        </Reveal>
+      </div>
+
       <div className="mx-auto max-w-[1360px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
         <Reveal>
           <figure className="relative overflow-hidden rounded-[30px] bg-brand-blue-soft">
             <img
               src={STRUCTURE_RENDER.imageUrl}
+              srcSet={STRUCTURE_RENDER.srcSet}
+              sizes="(min-width: 1360px) 1280px, 100vw"
               alt={STRUCTURE_RENDER.title}
               loading="lazy"
               className="aspect-[16/10] w-full object-cover sm:aspect-[21/9]"
